@@ -1,12 +1,14 @@
 const express = require('express');
 const app = express();
 const mysql = require('mysql');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const db = mysql.createPool({
-    host: 'localhost',
-    database: 'cowdb',
-    user: 'Bloten',
-    password: 'milkexpert3000',
+    host: process.env.DATABASE_HOST,
+    database: process.env.DATABASE_NAME,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASS,
 })
 
 app.get('/', (req, res) =>{
@@ -18,5 +20,5 @@ app.get('/', (req, res) =>{
 });
 
 app.listen(3001, () => {
-    console.log('runin');
+    console.log();
 });
