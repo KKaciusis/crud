@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const mysql = require('mysql');
+const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -9,16 +10,18 @@ const db = mysql.createPool({
     database: process.env.DATABASE_NAME,
     user: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASS,
-})
+});
 
-app.get('/', (req, res) =>{
+app.use(bodyParser.urlencoded({extended: true}))
 
-    const sqlinsert = "INSERT INTO cow_tier (cowName, favoriteSnack, milkProduction) VALUES ('cowalingus', 'carotis', '35');"
-    db.query(sqlinsert, (err, result) => {
-        res.send('hello nigeriao');
+app.post('/api/insert', (req, res) => {
+
+    const sqlinsert = "INSERT INTO cowdb (cowName, favorteSnack, milkProduction) VALUES (?, ?, ?)";
+    db.query(sqlinsert, [cowName, favoriteSnack, milkProduction], (err, result) => {
+
     });
 });
 
 app.listen(3001, () => {
-    console.log();
+    console.log("server started");
 });
