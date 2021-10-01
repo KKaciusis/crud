@@ -21,7 +21,7 @@ This is a basic CRUD application.
 
 ## Launch backend server
 
-To start development server, run the following command: `npm dev-start`
+To start development server, run the following command: `npm run dev-start`
 Server runs on port 3001, open `http://localhost:3001`
 
 ## Happy coding!
