@@ -21,7 +21,7 @@ app.get('/api/cows', (request, response) => {
     db.query(sqlSelect, (error, result) =>{
         console.log(result);
         response
-            .set('X-Total-Count', 10)
+            .set('X-Total-Count', 30)
             .set('Access-Control-Expose-Headers', 'X-Total-Count');
 
         response.send(result);

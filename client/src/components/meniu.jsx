@@ -37,7 +37,7 @@ function Meniu() {
               <Input name="cowName" placeholder="A NAME" onChange={(e) => setCowName(e.target.value)}/>
               <Input name="favoriteSnack" placeholder="A SNACK" onChange={(e) => setFavoriteSnack(e.target.value)}/>
               <Input name="milkProduction" placeholder="AND MILK QUANTINTY" onChange={(e) => setMilkProduction(e.target.value)}/>
-              <Button onClick={submitCow}>SUBMIT DAT COW</Button>
+              <Button onClick={submitCow} variant="contained">SUBMIT DAT COW</Button>
             </FormGroup>
           </CardContent>
         </Card> 
