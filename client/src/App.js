@@ -1,4 +1,7 @@
+
 import './App.css';
+import './index.css';
+
 import React, { useState, useEffect } from "react";
 
 import { Admin, Resource, ListGuesser } from 'react-admin';

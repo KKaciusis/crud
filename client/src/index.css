@@ -1,0 +1,22 @@
+.menuWrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.menuCard{
+    width: 500px;
+    margin: 10px;
+}
+.cowSubmitButton{
+    margin: 15px;
+}
+.cowContainer{
+}
+.cowCard{
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0px;
+}

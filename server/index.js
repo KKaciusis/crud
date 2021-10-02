@@ -3,6 +3,7 @@ const app = express();
 const mysql = require('mysql');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const { request } = require('express');
 dotenv.config();
 
 const db = mysql.createPool({
@@ -39,8 +40,15 @@ app.post("/api/cows", (request, response) => {
 
 app.delete("/api/cows/:id", (request, response) => {
     const sqlDelete = "DELETE FROM cow_tier WHERE id=" + request.params.id;
-    
     db.query(sqlDelete, [], (error, result) => {
+        console.log(error);
+    })
+});
+
+app.put('/api/cows', (request, response) =>{
+    const sqlUpdate = "UPDATE cow_tier SET favoriteSnack=?, milkProduction=? WHERE cowName=?";
+    const values = [request.body.newFavoriteSnack, request.body.newMilkProduction, request.body.cowName];
+    db.query(sqlUpdate, values, (error, result) => {
         console.log(error);
     })
 });

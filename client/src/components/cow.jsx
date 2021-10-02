@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 
 function Cow(props) {
     return(
-        <Card sx={{ maxWidth: 50 }}>
+        <Card className="cowCard">
             <CardMedia
               component="img"
               height="140"
@@ -20,11 +20,13 @@ function Cow(props) {
                 {props.data.cowName}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Fav. snack: {props.data.favoriteSnack}
+                Favorite snack: {props.data.favoriteSnack}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Milk Production ml/s: {props.data.milkProduction}
               </Typography>
             </CardContent>
             <CardActions>
-              <Button size="small">Share</Button>
               <Button size="small" onClick={() => props.delete(props.data.id)}>DROP DAT COW</Button>
             </CardActions>
           </Card>
