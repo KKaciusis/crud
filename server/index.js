@@ -15,15 +15,20 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-app.get('/api/get', (request, response) => {
+app.get('/api/cows', (request, response) => {
     const sqlSelect = "SELECT * FROM cow_tier";
 
     db.query(sqlSelect, (error, result) =>{
-        res.send(result);
+        console.log(result);
+        response
+            .set('X-Total-Count', 10)
+            .set('Access-Control-Expose-Headers', 'X-Total-Count');
+
+        response.send(result);
     });
 });
 
-app.post("/api/insert", (request, response) => {
+app.post("/api/cows", (request, response) => {
     const sqlinsert = "INSERT INTO cow_tier (cowName, favoriteSnack, milkProduction) VALUES (?, ?, ?)";
     const values = [request.body.cowName, request.body.favoriteSnack, request.body.milkProduction];
 
@@ -32,7 +37,7 @@ app.post("/api/insert", (request, response) => {
     });
 });
 
-app.delete("/api/delete/:id", (request, response) => {
+app.delete("/api/cows/:id", (request, response) => {
     const sqlDelete = "DELETE FROM cow_tier WHERE id=" + request.params.id;
     
     db.query(sqlDelete, [], (error, result) => {
