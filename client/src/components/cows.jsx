@@ -7,14 +7,14 @@ function Cows() {
   const [cows, setCows] = useState([]);
 
   useEffect(()=>{
-    Axios.get('http://localhost:3001/api/get').then((response) => {
+    Axios.get('http://localhost:3001/api/cows').then((response) => {
       setCows(response.data);
     });
 }, [])
 
 const deleteElement = (id) => {
   if (window.confirm('Y U NO COW?!!?')) {
-    Axios.delete('http://localhost:3001/api/delete/' + id);
+    Axios.delete('http://localhost:3001/api/cows/' + id);
     window.location.reload();
   }
 }

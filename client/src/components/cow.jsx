@@ -1,15 +1,33 @@
-function Cow(props) {
+import * as React from 'react';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
+function Cow(props) {
     return(
-        <div className="Cow">
-            <div>{props.data.id}</div>
-            <div className="name"><h4>{props.data.cowName}</h4></div>
-            <div className="favSnack">{props.data.favoriteSnack}</div>
-            <div className="milk"><h4>MELK ml/s</h4>&nbsp;{props.data.milkProduction}</div>
-            <button onClick={()=> props.delete(props.data.id)}>Free&nbsp;{props.data.cowName}</button>
-            <input type="text"/>
-            <button>Update</button>
-        </div>
+        <Card sx={{ maxWidth: 50 }}>
+            <CardMedia
+              component="img"
+              height="140"
+              image="https://via.placeholder.com/350x350"
+              alt="green iguana"
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {props.data.cowName}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Fav. snack: {props.data.favoriteSnack}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button size="small">Share</Button>
+              <Button size="small" onClick={() => props.delete(props.data.id)}>DROP DAT COW</Button>
+            </CardActions>
+          </Card>
     );
 };
   
