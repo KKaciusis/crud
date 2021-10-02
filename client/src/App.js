@@ -1,15 +1,16 @@
 import './App.css';
 import React, { useState, useEffect } from "react";
-import Meniu from './components/meniu';
-import Cows from './components/cows';
-function App() {
 
-  return(
-    <div className="App">
-    <Meniu/>
-    <Cows/>
-    </div>
-  )
-}
+import { Admin, Resource, ListGuesser } from 'react-admin';
+import jsonServerProvider from 'ra-data-json-server';
+
+import Dashboard from './Dashboard';
+
+const dataProvider = jsonServerProvider('http://localhost:3001/api');
+const App = () => (
+    <Admin dashboard={Dashboard} dataProvider={dataProvider}>
+        <Resource name="cows" list={ListGuesser} />
+    </Admin>
+);
 
 export default App;
