@@ -40,13 +40,7 @@ function Meniu() {
               <Button onClick={submitCow}>SUBMIT DAT COW</Button>
             </FormGroup>
           </CardContent>
-        </Card>
-        // <div className="form">
-        //   <input type="text" name="cowName" onChange={(e) => setCowName(e.target.value)}></input>
-        //   <input type="text" name="favoriteSnack" onChange={(e) => setFavoriteSnack(e.target.value)}></input>
-        //   <input type="text" name="milkProduction" onChange={(e) => setMilkProduction(e.target.value)}></input>
-        //   <button onClick={submitCow}>submit</button>
-        // </div>
+        </Card> 
     );
   }
   
