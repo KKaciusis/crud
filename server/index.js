@@ -15,16 +15,29 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-app.post("/api/insert", (req, res) => {
+app.get('/api/get', (request, response) => {
+    const sqlSelect = "SELECT * FROM cow_tier";
 
-    const cowName = req.body.cowName;
-    const favoriteSnack = req.body.favoriteSnack;
-    const milkProduction = req.body.milkProduction;
-
-    const sqlinsert = "INSERT INTO cow_tier (cowName, favoriteSnack, milkProduction) VALUES (?, ?, ?)";
-    db.query(sqlinsert, [cowName, favoriteSnack, milkProduction], (err, result) => {
-        console.log(err)
+    db.query(sqlSelect, (error, result) =>{
+        res.send(result);
     });
+});
+
+app.post("/api/insert", (request, response) => {
+    const sqlinsert = "INSERT INTO cow_tier (cowName, favoriteSnack, milkProduction) VALUES (?, ?, ?)";
+    const values = [request.body.cowName, request.body.favoriteSnack, request.body.milkProduction];
+
+    db.query(sqlinsert, values, (error, result) => {
+        console.log(result);
+    });
+});
+
+app.delete("/api/delete/:id", (request, response) => {
+    const sqlDelete = "DELETE FROM cow_tier WHERE id=" + request.params.id;
+    
+    db.query(sqlDelete, [], (error, result) => {
+        console.log(error);
+    })
 });
 
 app.listen(3001, () => {

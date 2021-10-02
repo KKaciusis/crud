@@ -8,20 +8,26 @@ function Meniu() {
     const [milkProduction, setMilkProduction] = useState('');
   
     const submitCow = () => {
-      Axios.post('http://localhost:3001/api/insert', {cowName: cowName, favoriteSnack: favoriteSnack, milkProduction: milkProduction}).then(() => {
-        console.log('insert compleated');
+      const cowObject = {
+        cowName: cowName,
+        favoriteSnack: favoriteSnack,
+        milkProduction: milkProduction
+      };
+      
+      Axios.post('http://localhost:3001/api/insert', cowObject).then(() => {
+        console.log('COW INSTALLATION compleated');
       });
+
+      window.location.reload();
     };
   
     return (
-      <div className="App">
         <div className="form">
           <input type="text" name="cowName" onChange={(e) => setCowName(e.target.value)}></input>
           <input type="text" name="favoriteSnack" onChange={(e) => setFavoriteSnack(e.target.value)}></input>
           <input type="text" name="milkProduction" onChange={(e) => setMilkProduction(e.target.value)}></input>
           <button onClick={submitCow}>submit</button>
         </div>
-      </div>
     );
   }
   
