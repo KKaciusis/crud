@@ -13,6 +13,7 @@ function Meniu() {
     const [cowName, setCowName] = useState('');
     const [favoriteSnack, setFavoriteSnack] = useState('');
     const [milkProduction, setMilkProduction] = useState('');
+    const [imagePath, setImagePath] = useState('')
 
     const [newFavoriteSnack, setNewFavoriteSnack] = useState('');
     const [newMilkProduction, setNewMilkProduction] = useState('');
@@ -21,9 +22,9 @@ function Meniu() {
       const cowObject = {
         cowName: cowName,
         favoriteSnack: favoriteSnack,
-        milkProduction: milkProduction
+        milkProduction: milkProduction,
+        imagePath: imagePath
       };
-      
       Axios.post('http://localhost:3001/api/cows', cowObject).then(() => {
         console.log('COW INSTALLATION compleated');
       });
@@ -57,6 +58,7 @@ function Meniu() {
               <Input name="cowName" placeholder="A NAME" onChange={(e) => setCowName(e.target.value)}/>
               <Input name="favoriteSnack" placeholder="A SNACK" onChange={(e) => setFavoriteSnack(e.target.value)}/>
               <Input name="milkProduction" placeholder="AND MILK QUANTINTY" onChange={(e) => setMilkProduction(e.target.value)}/>
+              <Button variant="contained" component="label">Upload Image<input type="file" hidden onChange={(e) => setImagePath(e.target.value)}/></Button>
               <Button onClick={submitCow} variant="contained" endIcon={<SendIcon/>}>SUBMIT DAT COW</Button>
             </FormGroup>
           </CardContent>

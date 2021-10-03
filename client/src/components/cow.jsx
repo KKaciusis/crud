@@ -12,7 +12,7 @@ function Cow(props) {
             <CardMedia
               component="img"
               height="140"
-              image="https://via.placeholder.com/350x350"
+              image={props.data.imagePath}
               alt="green iguana"
             />
             <CardContent>

@@ -30,8 +30,8 @@ app.get('/api/cows', (request, response) => {
 });
 
 app.post("/api/cows", (request, response) => {
-    const sqlinsert = "INSERT INTO cow_tier (cowName, favoriteSnack, milkProduction) VALUES (?, ?, ?)";
-    const values = [request.body.cowName, request.body.favoriteSnack, request.body.milkProduction];
+    const sqlinsert = "INSERT INTO cow_tier (cowName, favoriteSnack, milkProduction, imgPath) VALUES (?, ?, ?, ?)";
+    const values = [request.body.cowName, request.body.favoriteSnack, request.body.milkProduction, request.body.imagePath];
 
     db.query(sqlinsert, values, (error, result) => {
         console.log(result);
