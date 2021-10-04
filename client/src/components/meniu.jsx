@@ -51,26 +51,16 @@ function Meniu() {
     };
 
     const postCow = (e) => {
-      // if (!this.validate()) {
-      //   e.preventDefault()
-      // }
-
       let formdata = new FormData();
-      formdata.append('image', image)
+
+      formdata.append('cowName', cowName);
+      formdata.append('favoriteSnack', favoriteSnack);
+      formdata.append('milkProduction', milkProduction);
+      formdata.append('image', image);
+
       axios.post('http://localhost:3001/api/cows', formdata);
-      console.log(formdata.values()[0]);
 
-      // const cowObject = {
-      //   cowName: cowName,
-      //   favoriteSnack: favoriteSnack,
-      //   milkProduction: milkProduction,
-      // };
-
-      // Axios.post('http://localhost:3001/api/cows', cowObject, image).then(() => {
-      //   console.log('COW INSTALLATION compleated');
-      // });
-
-      // window.location.reload();
+      window.location.reload();
     };
   
     return (

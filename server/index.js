@@ -1,11 +1,17 @@
 const express = require('express');
-const app = express();
 const multer = require('multer');
-const mysql = require('mysql');
 const cors = require('cors');
-const dotenv = require('dotenv');
 const { request } = require('express');
 const fs = require("fs");
+
+const app = express();
+const mysql = require('mysql');
+const dotenv = require('dotenv');
+
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
 dotenv.config();
 
 const db = mysql.createPool({
@@ -14,9 +20,6 @@ const db = mysql.createPool({
     user: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASS,
 });
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
 
 const uploadsDir = __dirname + '/../client/public/uploads/';
 const upload = multer({dest: uploadsDir});
@@ -25,9 +28,9 @@ app.post('/api/cows/', upload.single('image'), (request, response) => {
     const fileName = request.file.originalname;
     const file = request.file.path;
 
-    const finalImagePath = uploadsDir + Date.now() + '-' + fileName;
+    const finalImagePath = Date.now() + '-' + fileName;
 
-    fs.rename(file, finalImagePath, (error) => {
+    fs.rename(file, uploadsDir + finalImagePath, (error) => {
         if (error) {
             console.log("Error: " + error);
 
@@ -36,22 +39,19 @@ app.post('/api/cows/', upload.single('image'), (request, response) => {
                 message: error
             });
 
-            console.log(response.message);
             return;
         }
 
-        // const sqlinsert = "INSERT INTO cow_tier (cowName, favoriteSnack, milkProduction, imgPath) VALUES (?, ?, ?, ?)";
-        // const values = [request.body.cowName, request.body.favoriteSnack, request.body.milkProduction, request.body.imagePath];
-        // // @TODO: Insert image path into database
-        // db.query(sqlinsert, values, (error, result) => {
+        const sqlinsert = "INSERT INTO cow_tier (cowName, favoriteSnack, milkProduction, imgPath) VALUES (?, ?, ?, ?)";
+        const values = [request.body.cowName, request.body.favoriteSnack, request.body.milkProduction, finalImagePath];
+
+        db.query(sqlinsert, values, (error, result) => {
             response.json({
                 success: true,
                 message: "File uploaded",
                 filieName: fileName
             });
-
-            console.log(response["message"]);
-        // });
+        });
     })
 })
 
