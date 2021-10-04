@@ -44,7 +44,7 @@ app.post('/api/cows/', upload.single('image'), (request, response) => {
 
         const sqlinsert = "INSERT INTO cow_tier (cowName, favoriteSnack, milkProduction, imgPath) VALUES (?, ?, ?, ?)";
         const values = [request.body.cowName, request.body.favoriteSnack, request.body.milkProduction, finalImagePath];
-
+        console.log(finalImagePath);
         db.query(sqlinsert, values, (error, result) => {
             response.json({
                 success: true,
