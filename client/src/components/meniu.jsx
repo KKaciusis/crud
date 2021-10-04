@@ -8,13 +8,14 @@ import Typography from '@material-ui/core/Typography';
 import SendIcon from '@material-ui/icons/Send';
 import Axios from 'axios';
 import "../index.css";
+import axios from "axios";
 
 function Meniu() {
     const [cowName, setCowName] = useState('');
     const [favoriteSnack, setFavoriteSnack] = useState('');
     const [milkProduction, setMilkProduction] = useState('');
     const [imagePath, setImagePath] = useState('')
-
+    const [image, setImage] = useState()
     const [newFavoriteSnack, setNewFavoriteSnack] = useState('');
     const [newMilkProduction, setNewMilkProduction] = useState('');
   
@@ -23,14 +24,16 @@ function Meniu() {
         cowName: cowName,
         favoriteSnack: favoriteSnack,
         milkProduction: milkProduction,
-        imagePath: imagePath
+        imagePath: imagePath,
+        image: image
       };
-      Axios.post('http://localhost:3001/api/cows', cowObject).then(() => {
+      Axios.post('http://localhost:3001/api/cows', cowObject, image).then(() => {
         console.log('COW INSTALLATION compleated');
       });
 
       window.location.reload();
     };
+    console.log(image)
     const editCow = () => {
       const cowObject = {
         cowName: cowName,
@@ -46,6 +49,29 @@ function Meniu() {
 
       window.location.reload();
     };
+
+    const postCow = (e) => {
+      // if (!this.validate()) {
+      //   e.preventDefault()
+      // }
+
+      let formdata = new FormData();
+      formdata.append('image', image)
+      axios.post('http://localhost:3001/api/cows', formdata);
+      console.log(formdata.values()[0]);
+
+      // const cowObject = {
+      //   cowName: cowName,
+      //   favoriteSnack: favoriteSnack,
+      //   milkProduction: milkProduction,
+      // };
+
+      // Axios.post('http://localhost:3001/api/cows', cowObject, image).then(() => {
+      //   console.log('COW INSTALLATION compleated');
+      // });
+
+      // window.location.reload();
+    };
   
     return (
       <div className="menuWrapper">
@@ -55,11 +81,13 @@ function Meniu() {
               Lets add a new super-cow!
             </Typography>
             <FormGroup>
-              <Input name="cowName" placeholder="A NAME" onChange={(e) => setCowName(e.target.value)}/>
-              <Input name="favoriteSnack" placeholder="A SNACK" onChange={(e) => setFavoriteSnack(e.target.value)}/>
-              <Input name="milkProduction" placeholder="AND MILK QUANTINTY" onChange={(e) => setMilkProduction(e.target.value)}/>
-              <Button variant="contained" component="label">Upload Image<input type="file" hidden onChange={(e) => setImagePath(e.target.value)}/></Button>
-              <Button onClick={submitCow} variant="contained" endIcon={<SendIcon/>}>SUBMIT DAT COW</Button>
+              <form onSubmit={postCow}>
+                <Input required name="cowName" placeholder="A NAME" onChange={(e) => setCowName(e.target.value)}/>
+                <Input required name="favoriteSnack" placeholder="A SNACK" onChange={(e) => setFavoriteSnack(e.target.value)}/>
+                <Input required name="milkProduction" placeholder="AND MILK QUANTINTY" onChange={(e) => setMilkProduction(e.target.value)}/>
+                <Input required name="file" type="file" onChange={(e) => setImage(e.target.files[0])}></Input>
+                <Button type="submit" variant="contained" endIcon={<SendIcon/>}>SUBMIT DAT COW</Button>
+              </form>
             </FormGroup>
           </CardContent>
         </Card>
