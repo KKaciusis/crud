@@ -22,14 +22,23 @@ const db = mysql.createPool({
 });
 
 const uploadsDir = __dirname + '/../client/public/uploads/';
-const upload = multer({dest: uploadsDir});
+const upload = multer({dest: uploadsDir,
+    fileFilter: (request, file, cb) => {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+          cb(null, true);
+        } else {
+          cb(null, false);
+          return cb(console.log('Only .png, .jpg and .jpeg format allowed!'));
+        }
+      }
+    });
 
 app.post('/api/cows/', upload.single('image'), (request, response) => {
     const fileName = request.file.originalname;
     const file = request.file.path;
 
     const finalImagePath = Date.now() + '-' + fileName;
-
+    console.log("file: " + request.file.name)
     fs.rename(file, uploadsDir + finalImagePath, (error) => {
         if (error) {
             console.log("Error: " + error);
@@ -44,7 +53,7 @@ app.post('/api/cows/', upload.single('image'), (request, response) => {
 
         const sqlinsert = "INSERT INTO cow_tier (cowName, favoriteSnack, milkProduction, imgPath) VALUES (?, ?, ?, ?)";
         const values = [request.body.cowName, request.body.favoriteSnack, request.body.milkProduction, finalImagePath];
-        console.log(finalImagePath);
+        
         db.query(sqlinsert, values, (error, result) => {
             response.json({
                 success: true,
