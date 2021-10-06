@@ -1,4 +1,4 @@
-import Cows from './cows';
+import Cows from './CowObjects/cows';
 import Meniu from './meniu';
 
 export default () => (

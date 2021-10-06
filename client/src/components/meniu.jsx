@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import FormGroup from '@material-ui/core/FormGroup';
@@ -14,26 +14,10 @@ function Meniu() {
     const [cowName, setCowName] = useState('');
     const [favoriteSnack, setFavoriteSnack] = useState('');
     const [milkProduction, setMilkProduction] = useState('');
-    const [imagePath, setImagePath] = useState('')
     const [image, setImage] = useState()
     const [newFavoriteSnack, setNewFavoriteSnack] = useState('');
     const [newMilkProduction, setNewMilkProduction] = useState('');
   
-    const submitCow = () => {
-      const cowObject = {
-        cowName: cowName,
-        favoriteSnack: favoriteSnack,
-        milkProduction: milkProduction,
-        imagePath: imagePath,
-        image: image
-      };
-      Axios.post('http://localhost:3001/api/cows', cowObject, image).then(() => {
-        console.log('COW INSTALLATION compleated');
-      });
-
-      window.location.reload();
-    };
-    console.log(image)
     const editCow = () => {
       const cowObject = {
         cowName: cowName,

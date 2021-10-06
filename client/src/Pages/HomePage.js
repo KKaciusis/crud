@@ -1,4 +1,4 @@
-import Cows from './cows';
+import Cows from '../components/CowObjects/cows';
 
 export default () => (
     <div class="wrapper">

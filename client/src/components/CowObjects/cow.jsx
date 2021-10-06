@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
@@ -11,9 +12,9 @@ function Cow(props) {
         <Card className="cowCard">
             <CardMedia
               component="img"
-              height="140"
+              height="300"
               image={"/uploads/" + props.data.imgPath}
-              alt="green iguana"
+              alt="this is supposed to be a cow"
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
