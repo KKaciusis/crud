@@ -21,8 +21,9 @@ const db = mysql.createPool({
     password: process.env.DATABASE_PASS,
 });
 
-const uploadsDir = __dirname + '/../client/public/uploads/';
-const upload = multer({dest: uploadsDir,
+const uploadsDirectory = __dirname + '/../client/public/uploads/';
+const upload = multer({
+    dest: uploadsDirectory,
     fileFilter: (request, file, cb) => {
         if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
           cb(null, true);
@@ -36,10 +37,9 @@ const upload = multer({dest: uploadsDir,
 app.post('/api/cows/', upload.single('image'), (request, response) => {
     const fileName = request.file.originalname;
     const file = request.file.path;
-
     const finalImagePath = Date.now() + '-' + fileName;
-    console.log("file: " + request.file.name)
-    fs.rename(file, uploadsDir + finalImagePath, (error) => {
+    
+    fs.rename(file, uploadsDirectory + finalImagePath, (error) => {
         if (error) {
             console.log("Error: " + error);
 
@@ -79,6 +79,7 @@ app.get('/api/cows', (request, response) => {
 
 app.delete("/api/cows/:id", (request, response) => {
     const sqlDelete = "DELETE FROM cow_tier WHERE id=" + request.params.id;
+
     db.query(sqlDelete, [], (error, result) => {
         console.log(error);
     })
@@ -87,6 +88,7 @@ app.delete("/api/cows/:id", (request, response) => {
 app.put('/api/cows', (request, response) =>{
     const sqlUpdate = "UPDATE cow_tier SET favoriteSnack=?, milkProduction=? WHERE cowName=?";
     const values = [request.body.newFavoriteSnack, request.body.newMilkProduction, request.body.cowName];
+    
     db.query(sqlUpdate, values, (error, result) => {
         console.log(error);
     })
