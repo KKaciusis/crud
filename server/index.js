@@ -79,11 +79,12 @@ app.get('/api/cows', (request, response) => {
 
 app.delete("/api/cows/:id", (request, response) => {
     const sqlDelete = "DELETE FROM cow_tier WHERE id=" + request.params.id;
-
+    
     db.query(sqlDelete, [], (error, result) => {
         console.log(error);
     })
 });
+
 
 app.put('/api/cows', (request, response) =>{
     const sqlUpdate = "UPDATE cow_tier SET favoriteSnack=?, milkProduction=? WHERE cowName=?";

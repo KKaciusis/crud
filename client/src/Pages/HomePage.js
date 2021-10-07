@@ -1,7 +1,7 @@
-import Cows from '../components/CowObjects/cows';
+import CowsHome from "../components/CowObjects/cowsForHomePage";
 
 export default () => (
     <div class="wrapper">
-        <Cows/>
+        <CowsHome/>
     </div>
 );

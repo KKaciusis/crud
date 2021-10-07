@@ -9,8 +9,10 @@ import AdminPage from './Pages/Admin';
 
 const App = () => (
     <Router>
+        <Switch>
         <Route path="/admin" component={AdminPage}/>
         <Route path="/" component={HomePage}/>
+        </Switch>
     </Router>
 );
 
