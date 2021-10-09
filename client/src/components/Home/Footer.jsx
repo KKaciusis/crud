@@ -10,11 +10,11 @@ import '../../index.css'
 
 const Footer = () => (
     <footer className="footer">
-    <Box bgcolor="#98afd4">
+    <Box bgcolor="#1b1c03">
         <Container>
             <Box display="flex" justifyContent="center">
                 <Box height="40px" padding="10px" display="flex" alignItems='center' justifyContent='center'>
-                <Button variant="outlined" href="/admin" endIcon={<SupervisorAccountOutlinedIcon/>}>Admin Page</Button>
+                <Button variant="outlined" color="white" href="/admin" endIcon={<SupervisorAccountOutlinedIcon/>}>Admin Page</Button>
                 </Box>
                 <Box height="40px" padding="10px" display="flex" alignItems="center" justifyContent="center">
                 <Button variant="outlined" href="/contacts" endIcon={<ImportContactsIcon/>}>Contacts Page</Button>
