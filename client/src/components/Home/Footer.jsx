@@ -10,7 +10,7 @@ import '../../index.css'
 
 const Footer = () => (
     <footer className="footer">
-    <Box bgcolor="#1b1c03">
+    <Box style={{background: 'linear-gradient(90deg, #000000 0%, #ffbf00 99%)'}}>
         <Container>
             <Box display="flex" justifyContent="center">
                 <Box height="40px" padding="10px" display="flex" alignItems='center' justifyContent='center'>

@@ -2,12 +2,12 @@ import * as React from 'react';
 import Box from '@material-ui/core/Box'; 
 import Typography from '@mui/material/Typography';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
+import DropDownMeniu from './DropDownMeniu';
 import "../../index.css";
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import { MicNoneTwoTone, NoEncryption } from '@material-ui/icons';
 
 const theme = createTheme();
 theme.typography.h3 = {
@@ -44,7 +44,10 @@ export default function Introduction() {
   return (
     <Box className="intro-box">
         <img className="intro-img" src="images/intro-wall.jpg" alt="This is intro" />
-        <Box className="intro-text">
+        <Box className="drop-down-meniu">
+          <DropDownMeniu/>
+        </Box>
+      <Box className="intro-text">
         <ThemeProvider theme={theme}>
             <Typography variant="h3" className="intro-header">
                 Welcome To Cow Tier List
@@ -52,8 +55,8 @@ export default function Introduction() {
             <Typography className="intro-paragraph" variant="body1">
             Bacon ipsum dolor amet elit tri-tip reprehenderit, pork chop laborum commodo swine tail tempor occaecat. Frankfurter in esse labore ut velit chicken alcatra elit veniam nulla adipisicing quis culpa. Chicken tempor sunt, ham flank capicola pork chop aliquip shankle pork loin. Tempor esse cow chicken chuck occaecat.
             </Typography>
-            </ThemeProvider>
-        </Box>
+        </ThemeProvider>
+      </Box>
     </Box>
   );
 }

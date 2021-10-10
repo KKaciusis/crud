@@ -62,3 +62,8 @@ body{
     opacity: 0.7;
     border-radius: 10px;
 }
+.drop-down-meniu{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
