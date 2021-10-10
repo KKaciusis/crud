@@ -3,10 +3,12 @@ import Footer from "../components/common/Footer";
 import Home from "../components/pages/Home";
 import "../index.css"
 
-export default () => (
+const HomePage = () => (
     <div class="wrapper">
         <Home/>
         <CowsHome/>
         <Footer/>
     </div>
 );
+
+export default HomePage;
