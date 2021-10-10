@@ -1,11 +1,11 @@
-import CowsHome from "../components/CowObjects/cowsForHomePage";
-import Footer from "../components/Home/Footer";
-import Introduction from "../components/Home/Introduction";
+import CowsHome from "../components/cows/CowListHomePage";
+import Footer from "../components/common/Footer";
+import Home from "../components/pages/Home";
 import "../index.css"
 
 export default () => (
     <div class="wrapper">
-        <Introduction/>
+        <Home/>
         <CowsHome/>
         <Footer/>
     </div>

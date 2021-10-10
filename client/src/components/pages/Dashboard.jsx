@@ -1,5 +1,5 @@
-import Cows from './CowObjects/cows';
-import Meniu from './meniu';
+import Cows from '../cows/CowList';
+import Meniu from '../common/Menu';
 
 export default () => (
     <div class="wrapper">

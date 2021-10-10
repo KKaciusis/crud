@@ -5,8 +5,8 @@ import '../index.css';
 import { Admin, Resource, ListGuesser } from 'react-admin';
 import jsonServerProvider from 'ra-data-json-server';
 
-import Dashboard from '../components/Dashboard';
-import { authProvider } from '../components/authentification/Auth';
+import Dashboard from '../components/pages/Dashboard';
+import { authProvider } from '../components/auth/Auth';
 
 const dataProvider = jsonServerProvider('http://localhost:3001/api');
 

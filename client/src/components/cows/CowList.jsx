@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Axios from 'axios';
-import Cow from './cow';
+import Cow from './CowCard';
 
 function Cows() {
 

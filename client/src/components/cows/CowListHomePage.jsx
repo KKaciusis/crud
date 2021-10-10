@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Axios from 'axios';
-import CowHome from "./cowForHomePage";
+import CowHome from "./CowCardHomePage";
 
 function CowsHome() {
 

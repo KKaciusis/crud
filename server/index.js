@@ -2,7 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const cors = require('cors');
 const { request } = require('express');
-const fs = require("fs");
+const fileSystem = require("fs");
 
 const app = express();
 const mysql = require('mysql');
@@ -14,32 +14,37 @@ app.use(express.urlencoded({extended: true}));
 
 dotenv.config();
 
-const db = mysql.createPool({
+// @TODO: Handle errors and return response
+// @TODO: Move /api/cows to different folder to be able to easily add new endpoints (research import options (maybe recursively))
+// @TODO: Move pictureUpload and database to common .js file
+
+const database = mysql.createPool({
     host: process.env.DATABASE_HOST,
     database: process.env.DATABASE_NAME,
     user: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASS,
 });
 
-const uploadsDirectory = __dirname + '/../client/public/uploads/';
-const upload = multer({
-    dest: uploadsDirectory,
-    fileFilter: (request, file, cb) => {
-        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
-          cb(null, true);
-        } else {
-          cb(null, false);
-          return cb(console.log('Only .png, .jpg and .jpeg format allowed!'));
-        }
-      }
-    });
+const UPLOADS_DIRECTORY = __dirname + '/../client/public/uploads/';
+const ALLOWED_FILE_TYPES = ["image/png", "image/jpg", "image/jpeg"];
 
-app.post('/api/cows/', upload.single('image'), (request, response) => {
-    const fileName = request.file.originalname;
-    const file = request.file.path;
-    const finalImagePath = Date.now() + '-' + fileName;
+const pictureUpload = multer({
+    dest: UPLOADS_DIRECTORY,
+    fileFilter: (request, file, callback) => {
+        if (ALLOWED_FILE_TYPES.includes(file.mimetype)) {
+            callback(null, true);
+        } else {
+            callback(null, false);
+            return callback(console.log('Only .png, .jpg and .jpeg format allowed!'));
+        }
+    }
+});
+
+app.post('/api/cows/', pictureUpload.single('image'), (request, response) => {
+    const ORIGINAL_FILE_NAME = request.file.originalname;
+    const FINAL_IMAGE_PATH = Date.now() + '-' + ORIGINAL_FILE_NAME;
     
-    fs.rename(file, uploadsDirectory + finalImagePath, (error) => {
+    fileSystem.rename(request.file.path, UPLOADS_DIRECTORY + FINAL_IMAGE_PATH, (error) => {
         if (error) {
             console.log("Error: " + error);
 
@@ -51,23 +56,23 @@ app.post('/api/cows/', upload.single('image'), (request, response) => {
             return;
         }
 
-        const sqlinsert = "INSERT INTO cow_tier (cowName, favoriteSnack, milkProduction, imgPath) VALUES (?, ?, ?, ?)";
-        const values = [request.body.cowName, request.body.favoriteSnack, request.body.milkProduction, finalImagePath];
+        const QUERY_INSERT = "INSERT INTO cow_tier (cowName, favoriteSnack, milkProduction, imgPath) VALUES (?, ?, ?, ?)";
+        const VALUES = [request.body.cowName, request.body.favoriteSnack, request.body.milkProduction, FINAL_IMAGE_PATH];
         
-        db.query(sqlinsert, values, (error, result) => {
+        database.query(QUERY_INSERT, VALUES, (error, result) => {
             response.json({
                 success: true,
                 message: "File uploaded",
-                filieName: fileName
+                fileName: ORIGINAL_FILE_NAME
             });
         });
     })
 })
 
 app.get('/api/cows', (request, response) => {
-    const sqlSelect = "SELECT * FROM cow_tier";
+    const QUERY_SELECT = "SELECT * FROM cow_tier";
 
-    db.query(sqlSelect, (error, result) =>{
+    database.query(QUERY_SELECT, (error, result) =>{
         console.log(result);
         response
             .set('X-Total-Count', 30)
@@ -78,23 +83,23 @@ app.get('/api/cows', (request, response) => {
 });
 
 app.delete("/api/cows/:id", (request, response) => {
-    const sqlDelete = "DELETE FROM cow_tier WHERE id=" + request.params.id;
+    const QUERY_DELETE = "DELETE FROM cow_tier WHERE id=" + request.params.id;
     
-    db.query(sqlDelete, [], (error, result) => {
+    database.query(QUERY_DELETE, [], (error, result) => {
         console.log(error);
     })
 });
 
 
 app.put('/api/cows', (request, response) =>{
-    const sqlUpdate = "UPDATE cow_tier SET favoriteSnack=?, milkProduction=? WHERE cowName=?";
-    const values = [request.body.newFavoriteSnack, request.body.newMilkProduction, request.body.cowName];
+    const QUERY_UPDATE = "UPDATE cow_tier SET favoriteSnack=?, milkProduction=? WHERE cowName=?";
+    const VALUES = [request.body.newFavoriteSnack, request.body.newMilkProduction, request.body.cowName];
     
-    db.query(sqlUpdate, values, (error, result) => {
+    database.query(QUERY_UPDATE, VALUES, (error, result) => {
         console.log(error);
     })
 });
 
 app.listen(3001, () => {
-    console.log("server started");
+    console.log("Server started");
 });
