@@ -79,3 +79,7 @@ body {
     top: 20px;
     right: 20px;
 }
+
+#root > .wrapper > div:nth-child(3 ){
+    overflow-x: inherit;
+}
